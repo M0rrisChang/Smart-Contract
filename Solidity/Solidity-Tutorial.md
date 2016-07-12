@@ -19,6 +19,51 @@ contract Future {                      /* Defining a contract, just like "class 
   }
 }
 ```
+### Local variables ###
+Variables not declared in functions are local variables. They could be ```private``` or ```public```. Either these keywords should follow the type of the variables. Such as ```address private owner```.
+### Functions ###
+Functions without return value would look like
+```JavaScript
+function foo(){
+  ...
+}
+```
+Functions with return value would look like
+```JavaScript
+/* let's say it'll returning a string */
+function foo() returns (string) {
+  string bar;
+  ...
+  return bar;
+}
+```
+Note that functions could have arguments, and it is just like how other language goes.
+```JavaScript
+function foo(string bar) {
+  ...
+}
+```
+# Solidity Tutorial #
+Basic introduction of Solidity.
+
+Reference: https://solidity.readthedocs.io/en/latest/
+
+## Components of a contract ##
+1. Contract name
+2. Local variables
+3. Functions
+
+```solidity
+contract Future {                      /* Defining a contract, just like "class Foo{}"         */
+  address master;                      /* Local variable                                       */
+  function Future(){                   /* Constructor, same name as contract, executed once    */
+    ...                                /* when the contract is created                         */
+  }                                    
+  function bet() {                     /* Function                                             */
+    ...
+  }
+}
+```
 
 
 ## Object-oriented ##
