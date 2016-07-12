@@ -11,7 +11,10 @@ Reference: https://solidity.readthedocs.io/en/latest/
 ```solidity
 contract Future {                      /* Defining a contract, just like "class Foo{}"         */
   address master;                      /* Local variable                                       */
-  function bet() {                     /* Constructor, not necessary                           */
+  function Future(){                   /* Constructor, same name as contract, executed once    */
+                                       /* when the contract is created                         */
+  }                                    /*
+  function bet() {                     /* Function, not necessary                              */
     ...
   }
 }
