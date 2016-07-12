@@ -1,7 +1,7 @@
 # Solidity Tutorial #
 Basic introduction of Solidity.
 
-Reference: https://solidity.readthedocs.io/en/latest/, http://slides.com/ming-derwang/solidity-tutorial#/
+Reference: https://solidity.readthedocs.io/en/latest/
 
 ## Components of a contract ##
 1. Contract name
@@ -49,10 +49,14 @@ Jonah would fix this.
 ```
 ### int / uint ###
 int / uint are aliases for int256 and uint256  (256 bits integer)
-### string ###
-### bytes ###
+### array ###
+```solidity
+uint[] memory a = new uint[](7);         
+```
+Using keyword "memory" and "new" to declare an array.
+### bytes / string ###
 ### bool ###
-* Just true or false.
+Just true or false.
 
 ### struct ###
 
