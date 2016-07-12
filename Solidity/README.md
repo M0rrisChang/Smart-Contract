@@ -39,6 +39,8 @@ contract Son is Father {                /* Son inherits all behaviors of father,
 * uint
 * string
 * bytes
+* bool
+Just true or false.
 * struct
 
 ## Communication among contracts ##
