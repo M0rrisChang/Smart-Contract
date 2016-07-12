@@ -40,7 +40,7 @@ contract Son is Father {                /* Son inherits all behaviors of father,
 ### string ###
 ### bytes ###
 ### bool ###
-Just true or false.
+* Just true or false.
 ### struct ###
 
 ## Communication among contracts ##
