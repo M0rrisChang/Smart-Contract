@@ -30,7 +30,7 @@ contract safe{
         throw;  //send back the accidental money
     }
 }
-contract Fat{
+contract Fat is safe{
     address master;
     uint public pool;
     function Future(){
@@ -43,7 +43,7 @@ contract Fat{
     }
 }     
 ```
-Son inherits all behaviors of father, such as function FatherSaying and owner.
+ inherits all behaviors of , such as function.
 ## Types ##
 These are commonly used data types in smart contracts.
 ### address ###
@@ -62,13 +62,19 @@ int / uint are aliases for int256 and uint256  (256 bits integer)
 ```solidity
 uint[] memory a = new uint[](7);         
 ```
-Using keyword "memory" and "new" to declare an array. To master array operations, you should 超連結！！！     http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#reference-types
+Using keyword "memory" and "new" to declare an array. To master array operations, you should 超連結！！！     http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#arrays
 
 ### bytes / string ###
 ### bool ###
 Just true or false.
 
 ### struct ###
+```solidity
+```
+And then using mapping
+```solidity
+```
+http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#structs
 
 ## Communication among contracts ##
 To be continued
