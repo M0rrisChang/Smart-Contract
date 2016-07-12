@@ -72,13 +72,16 @@ And then using mapping to construct a map of the structure.
 ```solidity
 mapping(address => gamble_data) public gamble;
 ```
-
+## Something you should know ##
+### msg.sender() ###
+### address.send() ###
+### sending values to function###
 
 ## Example contract ##
 Here's an example contract using features mentioned above.
 ```
-contract safe{
-    function(){
+contract safe{                  
+    function(){             
         throw;
     }
 }
