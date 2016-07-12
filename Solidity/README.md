@@ -1,4 +1,6 @@
 # Solidity Tutorial #
+Just some basic Introduction of Solidity.
+
 ## Components of a contract ##
 1. Contract name
 2. Local variables
@@ -29,13 +31,13 @@ contract Father {
 }
 
 contract Son is Father {                /* Son inherits all behaviors of father, such as function FatherSaying and owner. */
-  string data;
-  data = FatherSaying("hello world!");
 }
 ```
 ## Types ##
+* address
 * uint
 * string
+* struct
 
 ## Mappings ##
 ## Arrays ##
