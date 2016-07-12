@@ -5,7 +5,7 @@ blablabla
 ### Inheritance ###
 *   Red
 *   Green
-*   Blue
+*   Blue *  
 ## Types ##
 ## Mappings ##
 ## Arrays ##
