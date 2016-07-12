@@ -22,7 +22,7 @@ Note that msg.sender is the user calling the contract.
 
 ## Object-oriented ##
 ### Inheritance ###
-```Solidity
+```solidity
 contract Father {
   address owner;
   function FatherSaying(string inputString) constant returns (string) {
@@ -36,6 +36,11 @@ contract Son is Father {                /* Son inherits all behaviors of father,
 ## Types ##
 These are commonly used data types in smart contracts.
 ### address ###
+```solidity
+address owner = msg.sender;
+```
+* owner will save the address of the msg.sender
+
 ### mappings ###
 ### uint ###
 ### string ###
