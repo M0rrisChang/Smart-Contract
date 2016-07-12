@@ -27,23 +27,33 @@ Note that msg.sender is the user calling the contract.
 ```solidity
 contract safe{
     function(){
-        throw;  //send back the accidental money
+        throw;
     }
 }
-contract Fat is safe{
+
+contract Future is safe{
     address master;
     uint public pool;
+    struct gamble_data{
+        uint value;
+        uint guess;
+    }
+    mapping(address=>gamble_data) gamble;
+    bool open;
     function Future(){
         master=msg.sender;
+        open=true;
     }
     function update(){
         pool=this.balance;
     }
-    function bet(uint value){
+    function bet(uint guess){
+    if(!open) throw;
+        gamble[msg.sender]=gamble_data(msg.value,guess);
     }
-}     
+}    
 ```
- inherits all behaviors of , such as function.
+Future inherits all behaviors of safe, such as function.
 ## Types ##
 These are commonly used data types in smart contracts.
 ### address ###
@@ -56,6 +66,7 @@ It's just like a map.
 ```solidity
 Jonah would fix this.
 ```
+Using "=>" to determine types of key and value.
 ### int / uint ###
 int / uint are aliases for int256 and uint256  (256 bits integer)
 ### array ###
@@ -64,7 +75,10 @@ uint[] memory a = new uint[](7);
 ```
 Using keyword "memory" and "new" to declare an array. To master array operations, you should 超連結！！！     http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#arrays
 
-### bytes / string ###
+### string ###
+Not a value type! Not allowed to access by index.
+### bytes ###
+To be made clear..
 ### bool ###
 Just true or false.
 
