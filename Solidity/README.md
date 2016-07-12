@@ -2,9 +2,9 @@
 ## Components of a contract ##
 
 ```solidity
-    contract Father {         /* Defining a contract, similar to the role of "class" in other object-oriented language */
-      address owner;
-      function Father(){
+    contract Father {         /* Defining a contract, just like "class Foo{}" */
+      address owner;          /* Local variable                               */
+      function Father(){      /* Function                                     */
         owner = msg.sender;
       }
     }
