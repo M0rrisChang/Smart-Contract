@@ -112,7 +112,7 @@ It's an simple example using above variables.
 ```
 ### address.send() ###
 The contract can also send money to other accounts/contract.
-``` this.balance ```shows the balance of the current contract. 
+``` this.balance ```shows the balance of the current contract.
 ```[address.send(5000)] ``` send a transaction from the contract to the address.
 This is the example of the Betting contract.
 ```js
@@ -120,12 +120,12 @@ This is the example of the Betting contract.
     {
       if(this.balnace>value)
 		  msg.sender.send(value);
-      
+
     }
 ```
 ## Example contract ##
 Here's an example contract using features mentioned above.
-It's a gamble game.  Only the contract creator can announce the answer.  And the player can bet the answer with any value.  And the winner can take the money in proportion to the money he bet.
+It's a gamble game, and players would make a bet on a certain number.  Only the contract creator can announce the answer.  Players can bet on any answer with any value.  The winner(s) can take the money in proportion to the money he bet.
 ```js
 contract safe{                  
     function(){             
