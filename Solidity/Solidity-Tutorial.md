@@ -25,33 +25,6 @@ Note that msg.sender is the user calling the contract.
 ## Object-oriented ##
 ### Inheritance ###
 ```solidity
-contract safe{
-    function(){
-        throw;
-    }
-}
-
-contract Future is safe{
-    address master;
-    uint public pool;
-    struct gamble_data{
-        uint value;
-        uint guess;
-    }
-    mapping(address=>gamble_data) gamble;
-    bool open;
-    function Future(){
-        master=msg.sender;
-        open=true;
-    }
-    function update(){
-        pool=this.balance;
-    }
-    function bet(uint guess){
-    if(!open) throw;
-        gamble[msg.sender]=gamble_data(msg.value,guess);
-    }
-}    
 ```
 Future inherits all behaviors of safe, such as function.
 ## Types ##
@@ -92,3 +65,56 @@ http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#structs
 
 ## Communication among contracts ##
 To be continued
+
+
+
+
+
+```
+contract safe{
+    function(){
+        throw;
+    }
+}
+contract Future is safe{
+    address master;
+    uint public pool;
+    uint final_answer;  
+    struct gamble_data{
+        uint value;
+        uint guess;
+    }
+
+    mapping(address=>gamble_data) public gamble;
+    mapping(uint=>uint) public guesspool;
+    bool public open;
+    function Future(){
+        master=msg.sender;
+        open=true;
+    }
+    function update(){
+        if(pool<this.balance)
+        pool=this.balance;
+    }
+    function answer(uint answer){
+        if(msg.sender!=master)
+            throw;
+        final_answer=answer;
+        open=false;
+    }
+    function bet(uint guess){
+    if(!open ||gamble[msg.sender].value>0) throw;
+        gamble[msg.sender]=gamble_data(msg.value,guess);
+        guesspool[guess]+=msg.value;
+    }
+    function getPrize()
+    {
+        if(open==false){
+            if(gamble[msg.sender].guess==final_answer){
+                //if the better's guess is correct
+                msg.sender.send(pool*gamble[msg.sender].value/guesspool[final_answer]);
+            }
+        }
+    }
+}
+```
