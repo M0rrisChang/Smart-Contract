@@ -1,13 +1,8 @@
 # Solidity Tutorial #
 ## Components of a contract ##
-1. contract MyfirstContract {
-  2. local variables
-  3. functions  
-}
-
 
 ```solidity
-    contract Father {
+    contract Father {         /* Defining a contract, similar to the role of "class" in other object-oriented language */
       address owner;
       function Father(){
         owner = msg.sender;
