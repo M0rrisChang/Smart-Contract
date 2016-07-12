@@ -77,11 +77,9 @@ mapping(address => gamble_data) public gamble;
 ```msg.sender``` is the user sending a message. For examples, creating a contract or calling a function of a contract would both "send a message".
 
 ```msg.value``` is the value coming with the message.
-### How to send values to function ###
-jonah
 ### address.send() ###
 The contract can also send money to other accounts/contract.
-``` this.balance ```shows the balance of the current contract
+``` this.balance ```shows the balance of the current contract.
 ```[address.send(5000)] ``` send a transaction from the contract to the address.
 This is the example of the Betting contract.
 ```js
@@ -119,7 +117,7 @@ contract Future is safe {
     bool public open;
 
     function Future(){
-      master = msg.sender;
+      master = msg.sender;  /* the contract constructor is the master who can accounce the answer. */
       open = true;
     }
 
@@ -137,7 +135,7 @@ contract Future is safe {
 
     function bet(uint guess){
       if(!open || gamble[msg.sender].value > 0)
-        throw;
+        throw; /* The transaction will be thrown if the game is closed or the better have bet before. */
       gamble[msg.sender] = gamble_data(msg.value, guess);
       guesspool[guess] += msg.value;
     }
@@ -146,8 +144,8 @@ contract Future is safe {
     {
       if(open == false){
           if(gamble[msg.sender].guess == final_answer){
-              //if the better's guess is correct
-              msg.sender.send(pool * gamble[msg.sender].value / guesspool[final_answer]);
+              /* if the better's guess is correct */
+               msg.sender.send(pool * gamble[msg.sender].value / guesspool[final_answer]);
           }
       }
     }
