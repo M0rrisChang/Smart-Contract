@@ -25,16 +25,25 @@ Note that msg.sender is the user calling the contract.
 ## Object-oriented ##
 ### Inheritance ###
 ```solidity
-contract Father {
-  address owner;
-  function FatherSaying(string inputString) constant returns (string) {
-    return inputString;
-  }
+contract safe{
+    function(){
+        throw;  //send back the accidental money
+    }
 }
-
-contract Son is Father {                /* Son inherits all behaviors of father, such as function FatherSaying and owner. */
-}
+contract Fat{
+    address master;
+    uint public pool;
+    function Future(){
+        master=msg.sender;
+    }
+    function update(){
+        pool=this.balance;
+    }
+    function bet(uint value){
+    }
+}     
 ```
+Son inherits all behaviors of father, such as function FatherSaying and owner.
 ## Types ##
 These are commonly used data types in smart contracts.
 ### address ###
@@ -53,7 +62,7 @@ int / uint are aliases for int256 and uint256  (256 bits integer)
 ```solidity
 uint[] memory a = new uint[](7);         
 ```
-Using keyword "memory" and "new" to declare an array. To master array operations, you should      http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#reference-types
+Using keyword "memory" and "new" to declare an array. To master array operations, you should 超連結！！！     http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#reference-types
 
 ### bytes / string ###
 ### bool ###
