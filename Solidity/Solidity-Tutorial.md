@@ -43,7 +43,7 @@ It's just like a map.
 mapping(address => uint) public balanceOf;
 balanceOf[msg.sender] = 0;
 ```
-Using "=>" to determine types of key and value. In this map, address and uint would be types of the key and value.
+Using "=>" to determine types of key and value. In this map, ```address``` and ```uint``` would be types of the key and value.
 ### int / uint ###
 int / uint are aliases for int256 and uint256  (256 bits integer)
 ### array ###
