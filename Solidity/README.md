@@ -3,12 +3,12 @@
 blablabla
 ## Object-oriented ##
 ### Inheritance ###
-1.Bird
-1.McHale
-1. Parish
+1. Bird
+1. McHale
 *   Red
 *   Green
 *   Blue
+
 ## Types ##
 ## Mappings ##
 ## Arrays ##
