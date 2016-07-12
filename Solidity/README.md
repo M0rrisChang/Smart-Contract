@@ -1,6 +1,8 @@
 # Solidity Tutorial #
 Basic introduction of Solidity.
-
+Reference: https://solidity.readthedocs.io/en/latest/
+           http://slides.com/ming-derwang/solidity-tutorial#/
+           
 ## Components of a contract ##
 1. Contract name
 2. Local variables
@@ -39,10 +41,14 @@ These are commonly used data types in smart contracts.
 ```solidity
 address owner = msg.sender;
 ```
-* owner will save the address of the msg.sender
-
+owner's value would be the address of msg.sender.
 ### mappings ###
-### uint ###
+It's just like a map.
+```solidity
+Jonah would fix this.
+```
+### int / uint ###
+int / uint are aliases for int256 and uint256  (256 bits integer)
 ### string ###
 ### bytes ###
 ### bool ###
