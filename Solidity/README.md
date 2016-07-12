@@ -1,8 +1,10 @@
 # Solidity Tutorial #
 Basic introduction of Solidity.
+
 Reference: https://solidity.readthedocs.io/en/latest/
+
            http://slides.com/ming-derwang/solidity-tutorial#/
-           
+
 ## Components of a contract ##
 1. Contract name
 2. Local variables
