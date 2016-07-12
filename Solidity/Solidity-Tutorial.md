@@ -73,13 +73,9 @@ And then using mapping to construct a map of the structure.
 mapping(address => gamble_data) public gamble;
 ```
 
-## Communication among contracts ##
-To be continued
 
-
-
-
-
+## Example contract ##
+Here's an example contract using features mentioned above.
 ```
 contract safe{
     function(){
@@ -136,3 +132,6 @@ contract Future is safe {
     }
 }
 ```
+
+## Communication among contracts ##
+To be continued
