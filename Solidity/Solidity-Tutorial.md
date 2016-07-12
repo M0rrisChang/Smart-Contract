@@ -73,10 +73,13 @@ And then using mapping to construct a map of the structure.
 mapping(address => gamble_data) public gamble;
 ```
 ## Something you should know ##
-### msg.sender() ###
+### msg.sender / msg.value ###
+msg.sender is the user sending a message. For examples, creating a contract or calling a function of a contract would both "send a message".
+msg.value is the value coming with the message.
+### How to send values to function ###
+jonah
 ### address.send() ###
-### sending values to function###
-
+jonah
 ## Example contract ##
 Here's an example contract using features mentioned above.
 ```
