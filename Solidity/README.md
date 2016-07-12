@@ -7,9 +7,11 @@
 ```solidity
     contract Father {                          /* Defining a contract, just like "class Foo{}"         */
       address owner;                           /* Local variable                                       */
-      function Father() returns (string){      /* Function with a returning value, which is a string   */
+      function Father(){                       /* Constructor, not necessary                           */
         owner = msg.sender;
-        return "hello"
+      }
+      function hello() returns (string){       /* Function with a returning value, which is a string   */
+        return "hello";
       }
     }
 ```
