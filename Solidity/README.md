@@ -32,7 +32,7 @@ contract Son is Father {                /* Son inherits all behaviors of father,
   string data;
   data = FatherSaying("hello world!");
 }
-
+```
 ## Types ##
 * uint
 * string
