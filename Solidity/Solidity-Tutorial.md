@@ -82,7 +82,7 @@ jonah
 ### address.send() ###
 jonah
 ## Example contract ##
-Here's an example contract using features mentioned above.
+Here's an example contract using features mentioned above. jonah 介紹一下概念跟code review一下
 ```
 contract safe{                  
     function(){             
