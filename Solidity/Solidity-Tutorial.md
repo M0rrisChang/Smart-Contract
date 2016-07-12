@@ -43,29 +43,6 @@ function foo(string bar) {
   ...
 }
 ```
-# Solidity Tutorial #
-Basic introduction of Solidity.
-
-Reference: https://solidity.readthedocs.io/en/latest/
-
-## Components of a contract ##
-1. Contract name
-2. Local variables
-3. Functions
-
-```solidity
-contract Future {                      /* Defining a contract, just like "class Foo{}"         */
-  address master;                      /* Local variable                                       */
-  function Future(){                   /* Constructor, same name as contract, executed once    */
-    ...                                /* when the contract is created                         */
-  }                                    
-  function bet() {                     /* Function                                             */
-    ...
-  }
-}
-```
-
-
 ## Object-oriented ##
 ### Inheritance ###
 ```solidity
