@@ -9,9 +9,9 @@ Reference: https://solidity.readthedocs.io/en/latest/
 3. Functions
 
 ```solidity
-contract Future {                          /* Defining a contract, just like "class Foo{}"         */
-  address master;                           /* Local variable                                       */
-  function bet() {                       /* Constructor, not necessary                           */
+contract Future {                      /* Defining a contract, just like "class Foo{}"         */
+  address master;                      /* Local variable                                       */
+  function bet() {                     /* Constructor, not necessary                           */
     ...
   }
 }
