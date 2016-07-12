@@ -1,10 +1,9 @@
 # Solidity Tutorial #
-## Component ##
+## -Component ##
 blablabla
-## Object-oriented ##
-### Inheritance ###
-#### blablabla ####
+## -Object-oriented ##
+### --Inheritance ###
 blablabla
-## Types ##
-## Mappings ##
-## Arrays ##
+## -Types ##
+## -Mappings ##
+## -Arrays ##
