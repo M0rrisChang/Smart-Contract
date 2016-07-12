@@ -83,7 +83,7 @@ jonah
 jonah
 ## Example contract ##
 Here's an example contract using features mentioned above. jonah 介紹一下概念跟code review一下
-```
+```js
 contract safe{                  
     function(){             
         throw;
