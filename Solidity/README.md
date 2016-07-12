@@ -1,1 +1,3 @@
-### Solidity Tutorial
+Cool
+# Solidity Tutorial #
+## Object-oriented ##
