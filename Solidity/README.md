@@ -1,5 +1,5 @@
 # Solidity Tutorial #
-Just basic introduction of Solidity.
+Basic introduction of Solidity.
 
 ## Components of a contract ##
 1. Contract name
@@ -34,10 +34,12 @@ contract Son is Father {                /* Son inherits all behaviors of father,
 }
 ```
 ## Types ##
-* address
-* uint
-* string
-* struct
+* Address
+* Mappings
+* Uint
+* String
+* Bytes
+* Struct
 
 ## Mappings ##
 ## Arrays ##
