@@ -3,9 +3,9 @@
 blablabla
 ## Object-oriented ##
 ### Inheritance ###
-*## Red
-*## Green
-*## Blue
+#* Red 
+* Green
+* Blue
 
 ## Types ##
 ## Mappings ##
