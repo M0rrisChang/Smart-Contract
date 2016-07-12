@@ -53,7 +53,7 @@ Using "=>" to determine types of key and value. In this map, ```address``` and `
 ```solidity
 uint[] memory a = new uint[](7);         
 ```
-Using keyword "memory" and "new" to declare an array. To master array operations, you should be [here](http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#arrays) 
+Using keyword "memory" and "new" to declare an array. To master array operations, you should be [here](http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#arrays).
 ### string ###
 Not a value type! Not allowed to access by index.
 ### bytes ###
@@ -63,11 +63,15 @@ Just true or false.
 
 ### struct ###
 ```solidity
+struct gamble_data{
+  uint value;
+  uint guess;
+}
 ```
-And then using mapping
+And then using mapping to construct a map of the structure.
 ```solidity
+mapping(address => gamble_data) public gamble;
 ```
-http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#structs
 
 ## Communication among contracts ##
 To be continued
