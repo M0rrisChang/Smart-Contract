@@ -13,6 +13,9 @@
       }
     }
 ```
+
+Note that msg.sender is the user calling the contract.
+
 ## Object-oriented ##
 ### Inheritance ###
 * Red
