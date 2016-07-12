@@ -124,7 +124,8 @@ This is the example of the Betting contract.
     }
 ```
 ## Example contract ##
-Here's an example contract using features mentioned above. jonah 介紹一下概念跟code review一下
+Here's an example contract using features mentioned above.
+It's a gamble game.  Only the contract creator can announce the answer.  And the player can bet the answer with any value.  And the winner can take the money in proportion to the money he bet.
 ```js
 contract safe{                  
     function(){             
