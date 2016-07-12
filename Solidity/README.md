@@ -1,8 +1,10 @@
 # Solidity Tutorial #
 ## Components of a contract ##
-1. contract MyfirstContract {} == class foo {}
-2. local variables
-3. functions
+1. contract MyfirstContract {
+  2. local variables
+  3. functions  
+}
+
 
 ```solidity
     contract Father {
