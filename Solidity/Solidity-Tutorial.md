@@ -45,7 +45,7 @@ function foo(string bar) {
 ```
 ## Object-oriented ##
 ### Inheritance ###
-```solidity
+```js
 contract safe {
   ...
 }
@@ -57,14 +57,14 @@ Future inherits all behaviors of safe (functions and local variables).
 ## Types ##
 These are commonly used data types in smart contracts.
 ### address ###
-```solidity
+```js
 address owner = msg.sender;
 ```
 owner's value would be the address of msg.sender.
 Note that ```msg.sender``` is the user calling the contract.
 ### mappings ###
 It's just like a map.
-```solidity
+```js
 mapping(address => uint) public balanceOf;
 balanceOf[msg.sender] = 0;
 ```
@@ -84,14 +84,14 @@ To be made clear..
 Just true or false.
 
 ### struct ###
-```solidity
+```js
 struct gamble_data{
   uint value;
   uint guess;
 }
 ```
 And then using mapping to construct a map of the structure.
-```solidity
+```js
 mapping(address => gamble_data) public gamble;
 ```
 ## Something you should know ##
