@@ -1,5 +1,5 @@
 # Solidity Tutorial #
-Just some basic Introduction of Solidity.
+Just basic introduction of Solidity.
 
 ## Components of a contract ##
 1. Contract name
