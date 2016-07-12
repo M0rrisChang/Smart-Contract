@@ -34,6 +34,7 @@ contract Son is Father {                /* Son inherits all behaviors of father,
 }
 ```
 ## Types ##
+These are commonly used data types in smart contracts.
 ### address ###
 ### mappings ###
 ### uint ###
@@ -41,6 +42,7 @@ contract Son is Father {                /* Son inherits all behaviors of father,
 ### bytes ###
 ### bool ###
 * Just true or false.
+
 ### struct ###
 
 ## Communication among contracts ##
