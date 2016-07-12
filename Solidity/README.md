@@ -34,13 +34,12 @@ contract Son is Father {                /* Son inherits all behaviors of father,
 }
 ```
 ## Types ##
-* Address
-* Mappings
-* Uint
-* String
-* Bytes
-* Struct
+* address
+* mappings
+* uint
+* string
+* bytes
+* struct
 
-## Mappings ##
-## Arrays ##
 ## Communication among contracts ##
+To be continued
