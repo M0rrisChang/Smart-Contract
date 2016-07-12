@@ -74,23 +74,31 @@ mapping(address => gamble_data) public gamble;
 ```
 ## Something you should know ##
 ### msg.sender / msg.value ###
-```msg.sender``` is the user sending a message. For examples, creating a contract or calling a function of a contract would both "send a message".
+```msg.sender``` indicates the address of the transaction sender.
 
-```msg.value``` is the value coming with the message.
+```msg.value``` indicates the value sending with the transaction, in other words, money sending to the address.
+It's an simple example using above variables.
+```js
+	contract bank(){
+	 uint public savings;
+	 address public owner;
+	 function bank(){
+		 owner = msg.sender;
+		 savings = msg.value;
+	 }
+	}
+```
 ### address.send() ###
 The contract can also send money to other accounts/contract.
-``` this.balance ```shows the balance of the current contract.
+``` this.balance ```shows the balance of the current contract. 
 ```[address.send(5000)] ``` send a transaction from the contract to the address.
 This is the example of the Betting contract.
 ```js
-  function getPrize()
+  function withDraw(uint value)
     {
-      if(open == false){
-          if(gamble[msg.sender].guess == final_answer){
-              //if the better's guess is correct
-              msg.sender.send(pool * gamble[msg.sender].value / guesspool[final_answer]); //send the money to the winner in proportion to his bet.
-          }
-      }
+      if(this.balnace>value)
+		  msg.sender.send(value);
+      
     }
 ```
 ## Example contract ##
