@@ -14,3 +14,10 @@
 ## Mappings ##
 ## Arrays ##
 ## Communication among contracts ##
+``` Solidity
+
+    contract father {
+      address owner
+    }
+
+```
