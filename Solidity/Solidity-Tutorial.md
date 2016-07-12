@@ -9,24 +9,26 @@ Reference: https://solidity.readthedocs.io/en/latest/
 3. Functions
 
 ```solidity
-contract Father {                          /* Defining a contract, just like "class Foo{}"         */
-  address owner;                           /* Local variable                                       */
-  function Father() {                       /* Constructor, not necessary                           */
-    owner = msg.sender;
-  }
-  function hello() returns (string) {       /* Function with a returning value, which is a string   */
-    return "hello";
+contract Future {                          /* Defining a contract, just like "class Foo{}"         */
+  address master;                           /* Local variable                                       */
+  function bet() {                       /* Constructor, not necessary                           */
+    ...
   }
 }
 ```
 
-Note that msg.sender is the user calling the contract.
 
 ## Object-oriented ##
 ### Inheritance ###
 ```solidity
+contract safe {
+  ...
+}
+contract Future is safe {
+  ...
+}
 ```
-Future inherits all behaviors of safe, such as function.
+Future inherits all behaviors of safe (functions and local variables).
 ## Types ##
 These are commonly used data types in smart contracts.
 ### address ###
@@ -34,12 +36,14 @@ These are commonly used data types in smart contracts.
 address owner = msg.sender;
 ```
 owner's value would be the address of msg.sender.
+Note that msg.sender is the user calling the contract.
 ### mappings ###
 It's just like a map.
 ```solidity
-Jonah would fix this.
+mapping(address => uint) public balanceOf;
+balanceOf[msg.sender] = 0;
 ```
-Using "=>" to determine types of key and value.
+Using "=>" to determine types of key and value. In this map, address and uint would be types of the key and value.
 ### int / uint ###
 int / uint are aliases for int256 and uint256  (256 bits integer)
 ### array ###
@@ -76,45 +80,53 @@ contract safe{
         throw;
     }
 }
-contract Future is safe{
+
+contract Future is safe {
     address master;
     uint public pool;
-    uint final_answer;  
+    uint final_answer;
+
     struct gamble_data{
-        uint value;
-        uint guess;
+      uint value;
+      uint guess;
     }
 
-    mapping(address=>gamble_data) public gamble;
-    mapping(uint=>uint) public guesspool;
+    mapping(address => gamble_data) public gamble;
+    mapping(uint => uint) public guesspool;   /* key is the number you guess, value is the bet you make */
     bool public open;
+
     function Future(){
-        master=msg.sender;
-        open=true;
+      master = msg.sender;
+      open = true;
     }
+
     function update(){
-        if(pool<this.balance)
-        pool=this.balance;
+      if(pool < this.balance)
+      pool = this.balance;
     }
+
     function answer(uint answer){
-        if(msg.sender!=master)
-            throw;
-        final_answer=answer;
-        open=false;
+      if(msg.sender != master)
+          throw;
+      final_answer = answer;
+      open = false;
     }
+
     function bet(uint guess){
-    if(!open ||gamble[msg.sender].value>0) throw;
-        gamble[msg.sender]=gamble_data(msg.value,guess);
-        guesspool[guess]+=msg.value;
+      if(!open || gamble[msg.sender].value > 0)
+        throw;
+      gamble[msg.sender] = gamble_data(msg.value, guess);
+      guesspool[guess] += msg.value;
     }
+
     function getPrize()
     {
-        if(open==false){
-            if(gamble[msg.sender].guess==final_answer){
-                //if the better's guess is correct
-                msg.sender.send(pool*gamble[msg.sender].value/guesspool[final_answer]);
-            }
-        }
+      if(open == false){
+          if(gamble[msg.sender].guess == final_answer){
+              //if the better's guess is correct
+              msg.sender.send(pool * gamble[msg.sender].value / guesspool[final_answer]);
+          }
+      }
     }
 }
 ```
