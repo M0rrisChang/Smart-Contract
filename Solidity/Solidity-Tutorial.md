@@ -80,7 +80,21 @@ mapping(address => gamble_data) public gamble;
 ### How to send values to function ###
 jonah
 ### address.send() ###
-jonah
+The contract can also send money to other accounts/contract.
+``` this.balance ```shows the balance of the current contract
+```[address.send(5000)] ``` send a transaction from the contract to the address.
+This is the example of the Betting contract.
+```js
+  function getPrize()
+    {
+      if(open == false){
+          if(gamble[msg.sender].guess == final_answer){
+              //if the better's guess is correct
+              msg.sender.send(pool * gamble[msg.sender].value / guesspool[final_answer]); //send the money to the winner in proportion to his bet.
+          }
+      }
+    }
+```
 ## Example contract ##
 Here's an example contract using features mentioned above. jonah 介紹一下概念跟code review一下
 ```js
