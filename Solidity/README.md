@@ -14,7 +14,7 @@
 ## Mappings ##
 ## Arrays ##
 ## Communication among contracts ##
-``` solidity
+```solidity
 
     contract Coin {
     address minter;
