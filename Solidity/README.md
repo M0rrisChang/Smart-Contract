@@ -53,7 +53,8 @@ int / uint are aliases for int256 and uint256  (256 bits integer)
 ```solidity
 uint[] memory a = new uint[](7);         
 ```
-Using keyword "memory" and "new" to declare an array.
+Using keyword "memory" and "new" to declare an array. To master array operations, you should      http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#reference-types
+
 ### bytes / string ###
 ### bool ###
 Just true or false.
