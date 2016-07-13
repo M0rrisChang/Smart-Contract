@@ -61,7 +61,7 @@ These are commonly used data types in smart contracts.
 address owner = msg.sender;
 ```
 owner's value would be the address of msg.sender.
-Note that ```msg.sender``` is the user calling the contract.
+Note that ```msg.sender``` is the address of whom calling the contract.
 ### mappings ###
 It's just like a map.
 ```js
