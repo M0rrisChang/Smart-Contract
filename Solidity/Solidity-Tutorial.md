@@ -30,7 +30,7 @@ function foo(){
 ```
 Functions with return value would look like
 ```JavaScript
-/* let's say it'll returning a string */
+/* let's say it'll return a string */
 function foo() returns (string) {
   string bar;
   ...
@@ -80,6 +80,11 @@ Using keyword "memory" and "new" to declare an array. To master array operations
 ### bool ###
 Just true or false.
 
+### string ###
+```js
+string Boss = "Nicholas";
+```
+Note that string can NOT be accessed by index.
 ### struct ###
 ```js
 struct gamble_data{
