@@ -92,7 +92,7 @@ struct gamble_data{
   uint guess;
 }
 ```
-And then using ```mapping``` to construct a map of the structure.
+And we can use ```mapping``` to construct a map of the structure.
 ```js
 mapping(address => gamble_data) public gamble;
 ```
