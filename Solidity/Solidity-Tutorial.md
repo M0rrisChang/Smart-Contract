@@ -9,7 +9,7 @@ Reference: https://solidity.readthedocs.io/en/latest/
 3. Functions
 
 ```solidity
-contract Future {                      /* Defining a contract, just like "class Foo{}"         */
+contract Future {                      /* Defining a contract, whose name is Future            */
   address master;                      /* Local variable                                       */
   function Future(){                   /* Constructor, same name as contract, executed         */
     ...                                /* when the contract is created                         */
