@@ -1,5 +1,5 @@
 # Solidity Tutorial #
-Basic introduction of Solidity.
+This is a basic introduction of Solidity.
 
 Reference: https://solidity.readthedocs.io/en/latest/
 
