@@ -72,14 +72,11 @@ Using "=>" to determine types of key and value. In this map, ```address``` and `
 ### int / uint ###
 ```int``` and ```uint``` are aliases for ```int256``` and ```uint256```  (256 bits integer)
 ### array ###
-```solidity
+```js
 uint[] memory a = new uint[](7);         
 ```
 Using keyword "memory" and "new" to declare an array. To master array operations, you should be [here](http://solidity.readthedocs.io/en/latest/types.html?highlight=Arrays#arrays).
-### string ###
-Not a value type! Not allowed to access by index.
-### bytes ###
-To be made clear..
+
 ### bool ###
 Just true or false.
 
@@ -90,7 +87,7 @@ struct gamble_data{
   uint guess;
 }
 ```
-And then using mapping to construct a map of the structure.
+And then using ```mapping``` to construct a map of the structure.
 ```js
 mapping(address => gamble_data) public gamble;
 ```
