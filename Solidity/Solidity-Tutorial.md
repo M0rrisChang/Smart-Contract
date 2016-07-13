@@ -98,7 +98,7 @@ mapping(address => gamble_data) public gamble;
 ```
 ## Something you should know ##
 ### msg.sender / msg.value ###
-```msg.sender``` indicates the address of the transaction sender.
+```msg.sender``` indicates the address of the transaction sender. (It could be another contract or a user.)
 
 ```msg.value``` indicates the value sending with the transaction, in other words, money sending to the address.
 It's an simple example using above variables.
