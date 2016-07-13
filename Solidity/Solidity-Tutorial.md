@@ -11,7 +11,7 @@ Reference: https://solidity.readthedocs.io/en/latest/
 ```solidity
 contract Future {                      /* Defining a contract, just like "class Foo{}"         */
   address master;                      /* Local variable                                       */
-  function Future(){                   /* Constructor, same name as contract, execute          */
+  function Future(){                   /* Constructor, same name as contract, executed         */
     ...                                /* when the contract is created                         */
   }                                    
   function bet() {                     /* Function                                             */
@@ -20,7 +20,7 @@ contract Future {                      /* Defining a contract, just like "class 
 }
 ```
 ### Local variables ###
-Variables not declared in functions are local variables. They could be ```private``` or ```public```. Either these keywords should follow the type of the variables. Such as ```address private owner```.
+Variables not declared in functions are local variables. They could be ```private``` or ```public```. These keywords should follow the type of the variables. For example,  ```address private owner``` the variable  ```owner``` can only be seen within the contract.
 ### Functions ###
 Functions without return value would look like
 ```JavaScript
@@ -37,7 +37,7 @@ function foo() returns (string) {
   return bar;
 }
 ```
-Note that functions could have arguments, and it is just like how other language goes.
+Note that functions could have arguments, and it is just like how other language does.
 ```JavaScript
 function foo(string bar) {
   ...
@@ -53,7 +53,7 @@ contract Future is safe {
   ...
 }
 ```
-Future inherits all behaviors of safe (functions and local variables).
+```Future``` inherits all behaviors of safe (functions and local variables).
 ## Types ##
 These are commonly used data types in smart contracts.
 ### address ###
