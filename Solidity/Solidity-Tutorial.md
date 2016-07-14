@@ -184,6 +184,3 @@ contract Future is safe {
     }
 }
 ```
-
-## Communication among contracts ##
-To be continued
