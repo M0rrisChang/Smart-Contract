@@ -30,19 +30,20 @@
 
 
 
-Usage:
+###Usage example###
 
 The user [User] trying to deploy the contract at [Adr] with money [Balance] and save the state into [MyJson.json]
 ```
 $sudo ./evm --jonah --sender [User]  --receiver [Adr] --value [Balance] --code [Bytes] --write [MyJson.json]
 ```
-The sender must have enough balance before deploy the contract*
+The sender must have enough balance before deploy the contract:
 adding the balance [10000] to the user [User]
 ```
 sudo ./evm --morris [10000] -read [MyJson.json] --sender [User] --write [MyJson.json]
 ```
 
 If trying to call a function in a contract,
+
 EX:
 ```
 function setWeather(uint today){
