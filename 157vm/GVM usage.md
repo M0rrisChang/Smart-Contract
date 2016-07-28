@@ -32,7 +32,7 @@
 
 ###Usage example###
 
-The user [User] trying to deploy the contract at [Adr] with money [Balance] and save the state into [MyJson.json]
+The user [User] trying to deploy the contract at [Adr] with money [Balance] and save the state into [MyJson.json]:
 ```
 $sudo ./evm --jonah --sender [User]  --receiver [Adr] --value [Balance] --code [Bytes] --write [MyJson.json]
 ```
