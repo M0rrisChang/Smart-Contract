@@ -1,11 +1,9 @@
 ```
---write [filename]
+--write [filename]  把此次執行evm後的state存在檔案
 ```
-把此次執行evm後的state存在檔案
 ```
---read [filename]
+--read [filename]  從檔案讀取state
 ```
-從檔案讀取state
 ```
 --sender [address]
 ```
@@ -13,26 +11,22 @@
 --receiver [address]
 ```
 ```
---jonah
+--jonah  若要deploy一個新的contract，要加這個flag才會存下正確的code
 ```
-若要deploy一個新的contract，要加這個flag才會存下正確的code
 ```
---morris [money]
+--morris [money]  造物者，可以無中生有balance
 ```
-造物者，可以無中生有balance
 
 ```
 --code [bytecode]
 ```
 
 ```
---value [money]
+--value [money]  要附加在transaction的value
 ```
-要附加在transaction的value
 ```
---input [code]
+--input [code]  call某一function需要給的code
 ```
-call某一function需要給的code
 
 
 
