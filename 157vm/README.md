@@ -15,7 +15,7 @@
 --jonah  若要deploy一個新的contract，要加這個flag才會存下正確的code
 ```
 ```
---morris [money]  造物者，可以無中生有balance
+--morris ['{"color":"money"}']  造物者，可以無中生有balance
 ```
 
 ```
@@ -23,7 +23,7 @@
 ```
 
 ```
---value [money]  要附加在transaction的value
+--value ['{"color":"money"}']  要附加在transaction的value
 ```
 ```
 --input [code]  call某一function需要給的code
@@ -33,14 +33,14 @@
 
 ###Usage example###
 
-The user [User] trying to deploy the contract at [Adr] with money [Balance] and save the state into [MyJson.json]:
+The user [User] trying to deploy the contract at [Adr] with money [Balance] of [Color] and save the state into [MyJson.json]:
 ```
-$sudo ./evm --jonah --sender [User]  --receiver [Adr] --value [Balance] --code [Bytes] --write [MyJson.json]
+$sudo ./evm --jonah --sender [User]  --receiver [Adr] --value ['{"Color": "Balance"}'] --code [Bytes] --write [MyJson.json]
 ```
 The sender must have enough balance before deploy the contract:
-adding the balance [10000] to the user [User]
+adding the balance [10000] of color [157] to the user [User]
 ```
-sudo ./evm --morris [10000] -read [MyJson.json] --sender [User] --write [MyJson.json]
+sudo ./evm --morris ['{"157": "10000"}'] --read [MyJson.json] --sender [User] --write [MyJson.json]
 ```
 
 If trying to call a function in a contract,
