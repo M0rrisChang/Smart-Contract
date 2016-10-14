@@ -190,7 +190,7 @@ static const std::map<Instruction, InstructionInfo> c_instructionInfo =
 	{ Instruction::SIGNEXTEND,	{ "SIGNEXTEND",		0, 2, 1, false, LowTier } },
 	{ Instruction::SHA3,		{ "SHA3",			0, 2, 1, false, SpecialTier } },
 	{ Instruction::ADDRESS,		{ "ADDRESS",		0, 0, 1, false, BaseTier } },
-	{ Instruction::BALANCE,		{ "BALANCE",		0, 1, 1, false, ExtTier } },
+	{ Instruction::BALANCE,		{ "BALANCE",		0, 2, 1, false, ExtTier } },
 	{ Instruction::ORIGIN,		{ "ORIGIN",			0, 0, 1, false, BaseTier } },
 	{ Instruction::CALLER,		{ "CALLER",			0, 0, 1, false, BaseTier } },
 	{ Instruction::CALLVALUE,	{ "CALLVALUE",		0, 0, 1, false, BaseTier } },

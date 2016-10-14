@@ -785,26 +785,24 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 				StorageByteArrayElement(m_context).storeValue(*type, _functionCall.location(), true);
 			break;
 		}
-		/*
-		  case Location::GetValue:
-		    {
-		      _functionCall.expression().accept(*this);
-		      arguments[0]->accept(*this);
-		      utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
+		case Location::GetValue:
+    {
+      _functionCall.expression().accept(*this);
+      arguments[0]->accept(*this);
+      utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
 
-		      m_context << Instruction::CALLVALUE;
-		      break;
-		    }*/
-				/*
-		  case Location::GetBalance:
-		    {
-		      _functionCall.expression().accept(*this);
-		      arguments[0]->accept(*this);
-		      utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
-		      // cout<<"GETBALANCE"<<endl;
-		      m_context << Instruction::BALANCE;
-		      break;
-		    }*/
+      m_context << Instruction::CALLVALUE;
+      break;
+    }
+	  case Location::GetBalance:
+    {
+      _functionCall.expression().accept(*this);
+      arguments[0]->accept(*this);
+      utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
+      // cout<<"GETBALANCE"<<endl;
+      m_context << Instruction::BALANCE;
+      break;
+    }
 		case Location::ObjectCreation:
 		{
 			// Will allocate at the end of memory (MSIZE) and not write at all unless the base
