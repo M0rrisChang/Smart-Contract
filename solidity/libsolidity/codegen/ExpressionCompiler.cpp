@@ -238,19 +238,19 @@ bool ExpressionCompiler::visit(TupleExpression const& _tuple)
 	if (_tuple.isInlineArray())
 	{
 		ArrayType const& arrayType = dynamic_cast<ArrayType const&>(*_tuple.annotation().type);
-		
+
 		solAssert(!arrayType.isDynamicallySized(), "Cannot create dynamically sized inline array.");
 		m_context << max(u256(32u), arrayType.memorySize());
 		utils().allocateMemory();
 		m_context << Instruction::DUP1;
-	
+
 		for (auto const& component: _tuple.components())
 		{
 			component->accept(*this);
 			utils().convertType(*component->annotation().type, *arrayType.baseType(), true);
-			utils().storeInMemoryDynamic(*arrayType.baseType(), true);				
+			utils().storeInMemoryDynamic(*arrayType.baseType(), true);
 		}
-		
+
 		m_context << Instruction::POP;
 	}
 	else
@@ -613,6 +613,14 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			utils().encodeToMemory(argumentTypes, TypePointers(), function.padArguments(), true);
 			utils().toSizeAfterFreeMemoryPointer();
 			m_context << Instruction::SHA3;
+			break;
+		}
+		case Location::CheckTx:
+		{
+			_functionCall.expression().accept(*this);
+			arguments[0]->accept(*this);
+			utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
+			m_context << Instruction::CHECKTX;
 			break;
 		}
 		case Location::Log0:
@@ -1232,7 +1240,7 @@ void ExpressionCompiler::endVisit(Literal const& _literal)
 {
 	CompilerContext::LocationSetter locationSetter(m_context, _literal);
 	TypePointer type = _literal.annotation().type;
-	
+
 	switch (type->category())
 	{
 	case Type::Category::RationalNumber:

@@ -375,11 +375,11 @@ FixedPointType::FixedPointType(int _integerBits, int _fractionalBits, FixedPoint
 	m_integerBits(_integerBits), m_fractionalBits(_fractionalBits), m_modifier(_modifier)
 {
 	solAssert(
-		m_integerBits + m_fractionalBits > 0 && 
-		m_integerBits + m_fractionalBits <= 256 && 
-		m_integerBits % 8 == 0 && 
+		m_integerBits + m_fractionalBits > 0 &&
+		m_integerBits + m_fractionalBits <= 256 &&
+		m_integerBits % 8 == 0 &&
 		m_fractionalBits % 8 == 0,
-		"Invalid bit number(s) for fixed type: " + 
+		"Invalid bit number(s) for fixed type: " +
 		dev::toString(_integerBits) + "x" + dev::toString(_fractionalBits)
 	);
 }
@@ -413,9 +413,9 @@ TypePointer FixedPointType::unaryOperatorResult(Token::Value _operator) const
 		return make_shared<TupleType>();
 	// for fixed, we allow +, -, ++ and --
 	else if (
-		_operator == Token::Add || 
+		_operator == Token::Add ||
 		_operator == Token::Sub ||
-		_operator == Token::Inc || 
+		_operator == Token::Inc ||
 		_operator == Token::Dec
 	)
 		return shared_from_this();
@@ -473,25 +473,25 @@ tuple<bool, rational> RationalNumberType::isValidLiteral(Literal const& _literal
 	{
 		rational numerator;
 		rational denominator(1);
-		
+
 		auto radixPoint = find(_literal.value().begin(), _literal.value().end(), '.');
 		if (radixPoint != _literal.value().end())
 		{
 			if (
-				!all_of(radixPoint + 1, _literal.value().end(), ::isdigit) || 
-				!all_of(_literal.value().begin(), radixPoint, ::isdigit) 
+				!all_of(radixPoint + 1, _literal.value().end(), ::isdigit) ||
+				!all_of(_literal.value().begin(), radixPoint, ::isdigit)
 			)
 				throw;
 			//Only decimal notation allowed here, leading zeros would switch to octal.
 			auto fractionalBegin = find_if_not(
-				radixPoint + 1, 
-				_literal.value().end(), 
+				radixPoint + 1,
+				_literal.value().end(),
 				[](char const& a) { return a == '0'; }
 			);
 
 			denominator = bigint(string(fractionalBegin, _literal.value().end()));
 			denominator /= boost::multiprecision::pow(
-				bigint(10), 
+				bigint(10),
 				distance(radixPoint + 1, _literal.value().end())
 			);
 			numerator = bigint(string(_literal.value().begin(), radixPoint));
@@ -682,7 +682,7 @@ TypePointer RationalNumberType::binaryOperatorResult(Token::Value _operator, Typ
 			}
 			else
 				value = m_value.numerator() % other.m_value.numerator();
-			break;	
+			break;
 		case Token::Exp:
 		{
 			using boost::multiprecision::pow;
@@ -728,7 +728,7 @@ u256 RationalNumberType::literalValue(Literal const*) const
 	// its value.
 
 	u256 value;
-	bigint shiftedValue; 
+	bigint shiftedValue;
 
 	if (!isFractional())
 		shiftedValue = m_value.numerator();
@@ -781,7 +781,7 @@ shared_ptr<FixedPointType const> RationalNumberType::fixedPointType() const
 	bool negative = (m_value < 0);
 	unsigned fractionalBits = 0;
 	rational value = abs(m_value); // We care about the sign later.
-	rational maxValue = negative ? 
+	rational maxValue = negative ?
 		rational(bigint(1) << 255, 1):
 		rational((bigint(1) << 256) - 1, 1);
 
@@ -790,7 +790,7 @@ shared_ptr<FixedPointType const> RationalNumberType::fixedPointType() const
 		value *= 0x100;
 		fractionalBits += 8;
 	}
-	
+
 	if (value > maxValue)
 		return shared_ptr<FixedPointType const>();
 	// u256(v) is the actual value that will be put on the stack
@@ -1911,6 +1911,7 @@ MemberList::MemberMap FunctionType::nativeMembers(ContractDefinition const*) con
 	case Location::Creation:
 	case Location::ECRecover:
 	case Location::SHA256:
+	case Location::CheckTx:
 	case Location::RIPEMD160:
 	case Location::Bare:
 	case Location::BareCallCode:
