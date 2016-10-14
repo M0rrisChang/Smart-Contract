@@ -1911,6 +1911,7 @@ MemberList::MemberMap FunctionType::nativeMembers(ContractDefinition const*) con
 	case Location::Creation:
 	case Location::ECRecover:
 	case Location::SHA256:
+	case Location::CheckTx:
 	case Location::RIPEMD160:
 	case Location::Bare:
 	case Location::BareCallCode:

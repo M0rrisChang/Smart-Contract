@@ -628,6 +628,14 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			m_context << Instruction::SHA3;
 			break;
 		}
+		case Location::CheckTx:
+		{
+			_functionCall.expression().accept(*this);
+			arguments[0]->accept(*this);
+			utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
+			m_context << Instruction::CHECKTX;
+			break;
+		}
 		case Location::Log0:
 		case Location::Log1:
 		case Location::Log2:
