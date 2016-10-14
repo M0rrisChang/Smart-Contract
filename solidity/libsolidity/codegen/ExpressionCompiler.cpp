@@ -238,19 +238,19 @@ bool ExpressionCompiler::visit(TupleExpression const& _tuple)
 	if (_tuple.isInlineArray())
 	{
 		ArrayType const& arrayType = dynamic_cast<ArrayType const&>(*_tuple.annotation().type);
-		
+
 		solAssert(!arrayType.isDynamicallySized(), "Cannot create dynamically sized inline array.");
 		m_context << max(u256(32u), arrayType.memorySize());
 		utils().allocateMemory();
 		m_context << Instruction::DUP1;
-	
+
 		for (auto const& component: _tuple.components())
 		{
 			component->accept(*this);
 			utils().convertType(*component->annotation().type, *arrayType.baseType(), true);
-			utils().storeInMemoryDynamic(*arrayType.baseType(), true);				
+			utils().storeInMemoryDynamic(*arrayType.baseType(), true);
 		}
-		
+
 		m_context << Instruction::POP;
 	}
 	else
@@ -393,7 +393,6 @@ bool ExpressionCompiler::visit(BinaryOperation const& _binaryOperation)
 	// do not visit the child nodes, we already did that explicitly
 	return false;
 }
-
 bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 {
 	CompilerContext::LocationSetter locationSetter(m_context, _functionCall);
@@ -464,7 +463,7 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			// Only delegatecall and internal functions can be bound, this might be lifted later.
 			solAssert(function.location() == Location::DelegateCall || function.location() == Location::Internal, "");
 		switch (function.location())
-		{
+		  {
 		case Location::Internal:
 		{
 			// Calling convention: Caller pushes return address and arguments
@@ -534,9 +533,6 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			else
 				m_context << u256(0);
 			m_context << Instruction::CREATE;
-			// Check if zero (out of stack or not enough balance).
-			m_context << Instruction::DUP1 << Instruction::ISZERO;
-			m_context.appendConditionalJumpTo(m_context.errorTag());
 			if (function.valueSet())
 				m_context << swapInstruction(1) << Instruction::POP;
 			break;
@@ -563,38 +559,55 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			// Note that function is not the original function, but the ".value" function.
 			// Its values of gasSet and valueSet is equal to the original function's though.
 			if (function.valueSet())
+			  {
 				m_context << Instruction::POP;
-			arguments.front()->accept(*this);
+				m_context << Instruction::POP;
+			  }
+			arguments.front()->accept(*this); //value
+			arguments[1]->accept(*this); // color
 			break;
 		case Location::Send:
-			_functionCall.expression().accept(*this);
-			// Provide the gas stipend manually at first because we may send zero ether.
-			// Will be zeroed if we send more than zero ether.
-			m_context << u256(eth::GasCosts::callStipend);
-			arguments.front()->accept(*this);
-			utils().convertType(
-				*arguments.front()->annotation().type,
-				*function.parameterTypes().front(), true
-			);
-			// gas <- gas * !value
-			m_context << Instruction::SWAP1 << Instruction::DUP2;
-			m_context << Instruction::ISZERO << Instruction::MUL << Instruction::SWAP1;
-			appendExternalFunctionCall(
-				FunctionType(
-					TypePointers{},
-					TypePointers{},
-					strings(),
-					strings(),
-					Location::Bare,
-					false,
-					nullptr,
-					false,
-					false,
-					true,
-					true
-				),
-				{}
-			);
+			m_context <<u256(0);
+		  m_context <<u256(0);
+		  m_context <<u256(0);
+		  m_context <<u256(0);
+
+		  //m_context <<u256(0);
+
+		  arguments.front()->accept(*this); //value
+		  utils().convertType(*arguments.front()->annotation().type,*function.parameterTypes().front());
+		  arguments[1]->accept(*this);
+		  utils().convertType(*arguments[1]->annotation().type,*function.parameterTypes()[1]); //color
+		  _functionCall.expression().accept(*this); //address
+		  m_context << u256(0); //gas
+		  m_context <<Instruction::CALL;
+
+		  /*_functionCall.expression().accept(*this);
+		  m_context<<u256(0);
+		  arguments.front()->accept(*this);
+		  utils().convertType(*arguments.front()->annotation().type,*function.parameterTypes().front());
+			arguments[1]->accept(*this);
+		  utils().convertType(*arguments[1]->annotation().type,*function.parameterTypes()[1]);
+		  appendExternalFunctionCall( FunctionType(
+							   TypePointers{},
+							   TypePointers{},
+							   strings(),
+							   strings(),
+							   Location::Bare,
+							   false,
+							  nullptr,
+							   true,
+							   true
+							   ),
+					      {}
+					      );
+
+
+*/
+			//utils().convertType(u256(0),IntegerType(256));
+
+			//	m_context <<Instruction::POP;
+
 			break;
 		case Location::Selfdestruct:
 			arguments.front()->accept(*this);
@@ -730,7 +743,7 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 		case Location::ByteArrayPush:
 		case Location::ArrayPush:
 		{
-			_functionCall.expression().accept(*this);
+		  _functionCall.expression().accept(*this);
 			solAssert(function.parameterTypes().size() == 1, "");
 			solAssert(!!function.parameterTypes()[0], "");
 			TypePointer paramType = function.parameterTypes()[0];
@@ -764,6 +777,26 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 				StorageByteArrayElement(m_context).storeValue(*type, _functionCall.location(), true);
 			break;
 		}
+		/*
+		  case Location::GetValue:
+		    {
+		      _functionCall.expression().accept(*this);
+		      arguments[0]->accept(*this);
+		      utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
+
+		      m_context << Instruction::CALLVALUE;
+		      break;
+		    }*/
+				/*
+		  case Location::GetBalance:
+		    {
+		      _functionCall.expression().accept(*this);
+		      arguments[0]->accept(*this);
+		      utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
+		      // cout<<"GETBALANCE"<<endl;
+		      m_context << Instruction::BALANCE;
+		      break;
+		    }*/
 		case Location::ObjectCreation:
 		{
 			// Will allocate at the end of memory (MSIZE) and not write at all unless the base
@@ -814,12 +847,14 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			m_context << Instruction::POP;
 			break;
 		}
+
 		default:
 			BOOST_THROW_EXCEPTION(InternalCompilerError() << errinfo_comment("Invalid function type."));
 		}
 	}
 	return false;
 }
+
 
 bool ExpressionCompiler::visit(NewExpression const&)
 {
@@ -1232,7 +1267,7 @@ void ExpressionCompiler::endVisit(Literal const& _literal)
 {
 	CompilerContext::LocationSetter locationSetter(m_context, _literal);
 	TypePointer type = _literal.annotation().type;
-	
+
 	switch (type->category())
 	{
 	case Type::Category::RationalNumber:
@@ -1383,8 +1418,208 @@ void ExpressionCompiler::appendShiftOperatorCode(Token::Value _operator)
 	default:
 		BOOST_THROW_EXCEPTION(InternalCompilerError() << errinfo_comment("Unknown shift operator."));
 	}
-}
+}/*
 
+void ExpressionCompiler::appendExternalFunctionCall(
+	FunctionType const& _functionType,
+	vector<ASTPointer<Expression const>> const& _arguments
+)
+{
+	// This is the modified appendExternalFunctionclll supporting call with multi-color.
+	//cout<<"Append External functioncall" <<endl;
+	solAssert(
+		_functionType.takesArbitraryParameters() ||
+		_arguments.size() == _functionType.parameterTypes().size(), ""
+	);
+
+	// Assumed stack content here:
+	// <stack top>
+	// color [if _functionType.valueSet()]
+	// value [if _functionType.valueSet()]
+	// gas [if _functionType.gasSet()]
+	// self object [if bound - moved to top right away]
+	// function identifier [unless bare]
+	// contract address
+
+	unsigned selfSize = _functionType.bound() ? _functionType.selfType()->sizeOnStack() : 0;
+	unsigned gasValueSize = (_functionType.gasSet() ? 1 : 0) + (_functionType.valueSet() ? 2 : 0);
+	unsigned contractStackPos = m_context.currentToBaseStackOffset(1 + gasValueSize + selfSize + (_functionType.isBareCall() ? 0 : 1));
+	unsigned gasStackPos = m_context.currentToBaseStackOffset(gasValueSize);
+	unsigned valueStackPos = m_context.currentToBaseStackOffset(1);
+
+	// move self object to top
+	if (_functionType.bound())
+		utils().moveToStackTop(gasValueSize, _functionType.selfType()->sizeOnStack());
+
+	using FunctionKind = FunctionType::Location;
+	FunctionKind funKind = _functionType.location();
+	bool returnSuccessCondition = funKind == FunctionKind::Bare || funKind == FunctionKind::BareCallCode;
+	bool isCallCode = funKind == FunctionKind::BareCallCode || funKind == FunctionKind::CallCode;
+	bool isDelegateCall = funKind == FunctionKind::BareDelegateCall || funKind == FunctionKind::DelegateCall;
+
+	unsigned retSize = 0;
+	if (returnSuccessCondition)
+		retSize = 0; // return value actually is success condition
+	else
+		for (auto const& retType: _functionType.returnParameterTypes())
+		{
+			solAssert(!retType->isDynamicallySized(), "Unable to return dynamic type from external call.");
+			retSize += retType->calldataEncodedSize();
+		}
+
+	// Evaluate arguments.
+	TypePointers argumentTypes;
+	TypePointers parameterTypes = _functionType.parameterTypes();
+	bool manualFunctionId =
+		(funKind == FunctionKind::Bare || funKind == FunctionKind::BareCallCode || funKind == FunctionKind::BareDelegateCall) &&
+		!_arguments.empty() &&
+		_arguments.front()->annotation().type->mobileType()->calldataEncodedSize(false) ==
+			CompilerUtils::dataStartOffset;
+	if (manualFunctionId)
+	{
+		// If we have a Bare* and the first type has exactly 4 bytes, use it as
+		// function identifier.
+		_arguments.front()->accept(*this);
+		utils().convertType(
+			*_arguments.front()->annotation().type,
+			IntegerType(8 * CompilerUtils::dataStartOffset),
+			true
+		);
+		for (unsigned i = 0; i < gasValueSize; ++i)
+			m_context << swapInstruction(gasValueSize - i);
+		gasStackPos++;
+		valueStackPos++;
+	}
+	if (_functionType.bound())
+	{
+		argumentTypes.push_back(_functionType.selfType());
+		parameterTypes.insert(parameterTypes.begin(), _functionType.selfType());
+	}
+	for (size_t i = manualFunctionId ? 1 : 0; i < _arguments.size(); ++i)
+	{
+		_arguments[i]->accept(*this);
+		argumentTypes.push_back(_arguments[i]->annotation().type);
+	}
+
+	// Copy function identifier to memory.
+	utils().fetchFreeMemoryPointer();
+	if (!_functionType.isBareCall() || manualFunctionId)
+	{
+		m_context << dupInstruction(2 + gasValueSize + CompilerUtils::sizeOnStack(argumentTypes));
+		utils().storeInMemoryDynamic(IntegerType(8 * CompilerUtils::dataStartOffset), false);
+	}
+	// If the function takes arbitrary parameters, copy dynamic length data in place.
+	// Move argumenst to memory, will not update the free memory pointer (but will update the memory
+	// pointer on the stack).
+	utils().encodeToMemory(
+		argumentTypes,
+		parameterTypes,
+		_functionType.padArguments(),
+		_functionType.takesArbitraryParameters(),
+		isCallCode || isDelegateCall
+	);
+
+	// Stack now:
+	// <stack top>
+	// input_memory_end
+	// value [if _functionType.valueSet()]
+	// gas [if _functionType.gasSet()]
+	// function identifier [unless bare]
+	// contract address
+
+	// Output data will replace input data.
+	// put on stack: <size of output> <memory pos of output> <size of input> <memory pos of input>
+	m_context << u256(retSize);
+	utils().fetchFreeMemoryPointer();
+	m_context << Instruction::DUP1 << Instruction::DUP4 << Instruction::SUB;
+	m_context << Instruction::DUP2;
+
+	// CALL arguments: outSize, outOff, inSize, inOff (already present up to here)
+	// [value,] addr, gas (stack top)
+	if (isDelegateCall)
+		solAssert(!_functionType.valueSet(), "Value set for delegatecall");
+	else if (_functionType.valueSet())
+	  {
+	    auto myValueStackPos =m_context.baseToCurrentStackOffset(valueStackPos);
+	    m_context << dupInstruction(myValueStackPos+1); // value
+	    m_context << dupInstruction(myValueStackPos+1); // color
+	  }
+	else
+	  {
+	    m_context << u256(0);
+	    m_context << u256(0);
+	  }
+	m_context << dupInstruction(m_context.baseToCurrentStackOffset(contractStackPos));
+
+	if (_functionType.gasSet())
+		m_context << dupInstruction(m_context.baseToCurrentStackOffset(gasStackPos));
+	else
+
+	{
+		// send all gas except the amount needed to execute "SUB" and "CALL"
+		// @todo this retains too much gas for now, needs to be fine-tuned.
+		u256 gasNeededByCaller = eth::GasCosts::callGas + 10;
+		if (_functionType.valueSet())
+			gasNeededByCaller += eth::GasCosts::callValueTransferGas;
+		if (!isCallCode && !isDelegateCall)
+			gasNeededByCaller += eth::GasCosts::callNewAccountGas; // we never know
+		m_context <<
+			gasNeededByCaller <<
+			Instruction::GAS <<
+			Instruction::SUB;
+	}
+	if (isDelegateCall)
+		m_context << Instruction::DELEGATECALL;
+	else if (isCallCode)
+		m_context << Instruction::CALLCODE;
+	else
+		m_context << Instruction::CALL;
+
+	unsigned remainsSize =
+		2 + // contract address, input_memory_end
+	  _functionType.valueSet() * 2 + // value + color
+		_functionType.gasSet() +
+		(!_functionType.isBareCall() || manualFunctionId);
+
+	if (returnSuccessCondition)
+		m_context << swapInstruction(remainsSize);
+	else
+	{
+		//Propagate error condition (if CALL pushes 0 on stack).
+		m_context << Instruction::ISZERO;
+		m_context.appendConditionalJumpTo(m_context.errorTag());
+	}
+
+	utils().popStackSlots(remainsSize);
+
+	if (returnSuccessCondition)
+	{
+		// already there
+	}
+	else if (funKind == FunctionKind::RIPEMD160)
+	{
+		// fix: built-in contract returns right-aligned data
+		utils().fetchFreeMemoryPointer();
+		utils().loadFromMemoryDynamic(IntegerType(160), false, true, false);
+		utils().convertType(IntegerType(160), FixedBytesType(20));
+	}
+	else if (!_functionType.returnParameterTypes().empty())
+	{
+		utils().fetchFreeMemoryPointer();
+		bool memoryNeeded = false;
+		for (auto const& retType: _functionType.returnParameterTypes())
+		{
+			utils().loadFromMemoryDynamic(*retType, false, true, true);
+			if (dynamic_cast<ReferenceType const*>(retType.get()))
+				memoryNeeded = true;
+		}
+		if (memoryNeeded)
+			utils().storeFreeMemoryPointer();
+		else
+			m_context << Instruction::POP;
+	}
+}
+*/
 void ExpressionCompiler::appendExternalFunctionCall(
 	FunctionType const& _functionType,
 	vector<ASTPointer<Expression const>> const& _arguments
@@ -1624,7 +1859,6 @@ void ExpressionCompiler::appendExternalFunctionCall(
 			m_context << Instruction::POP;
 	}
 }
-
 void ExpressionCompiler::appendExpressionCopyToMemory(Type const& _expectedType, Expression const& _expression)
 {
 	solAssert(_expectedType.isValueType(), "Not implemented for non-value types.");
