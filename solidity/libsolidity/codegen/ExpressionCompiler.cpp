@@ -794,12 +794,11 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
       m_context << Instruction::CALLVALUE;
       break;
     }
-	  case Location::GetBalance:
+  case Location::GetBalance:
     {
       _functionCall.expression().accept(*this);
       arguments[0]->accept(*this);
       utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
-      // cout<<"GETBALANCE"<<endl;
       m_context << Instruction::BALANCE;
       break;
     }
@@ -977,12 +976,12 @@ bool ExpressionCompiler::visit(MemberAccess const& _memberAccess)
 	case Type::Category::Integer:
 		if (member == "balance")
 		{
-			utils().convertType(
-				*_memberAccess.expression().annotation().type,
-				IntegerType(0, IntegerType::Modifier::Address),
-				true
-			);
-			m_context << Instruction::BALANCE;
+		//	utils().convertType(
+		//		*_memberAccess.expression().annotation().type,
+		//		IntegerType(0, IntegerType::Modifier::Address),
+		//		true
+		//	);
+	//		m_context << Instruction::BALANCE;
 		}
 		else if ((set<string>{"send", "call", "callcode", "delegatecall"}).count(member))
 			utils().convertType(
