@@ -43,9 +43,7 @@ public:
 	StackHeightChecker(CompilerContext const& _context):
 		m_context(_context), stackHeight(m_context.stackHeight()) {}
 	void check() {
-//			cout<<"Stack height " <<m_context.stackHeight()<<endl;
-//			cout<<"stack Height  "<<stackHeight<<endl; 
-		 solAssert(m_context.stackHeight() == stackHeight, "I sense a disturbance in the stack.");
+		  solAssert(m_context.stackHeight() == stackHeight, "I sense a disturbance in the stack.");
 	 }
 private:
 	CompilerContext const& m_context;

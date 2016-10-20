@@ -567,46 +567,40 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			arguments[1]->accept(*this); // color
 			break;
 		case Location::Send:
-			m_context <<u256(0);
-		  m_context <<u256(0);
-		  m_context <<u256(0);
-		  m_context <<u256(0);
-
-		  //m_context <<u256(0);
-
-		  arguments.front()->accept(*this); //value
-		  utils().convertType(*arguments.front()->annotation().type,*function.parameterTypes().front());
-		  arguments[1]->accept(*this);
-		  utils().convertType(*arguments[1]->annotation().type,*function.parameterTypes()[1]); //color
-		  _functionCall.expression().accept(*this); //address
-		  m_context << u256(0); //gas
-		  m_context <<Instruction::CALL;
-
-		  /*_functionCall.expression().accept(*this);
-		  m_context<<u256(0);
-		  arguments.front()->accept(*this);
-		  utils().convertType(*arguments.front()->annotation().type,*function.parameterTypes().front());
-			arguments[1]->accept(*this);
-		  utils().convertType(*arguments[1]->annotation().type,*function.parameterTypes()[1]);
-		  appendExternalFunctionCall( FunctionType(
-							   TypePointers{},
-							   TypePointers{},
-							   strings(),
-							   strings(),
-							   Location::Bare,
-							   false,
-							  nullptr,
-							   true,
-							   true
-							   ),
-					      {}
-					      );
-
-
-*/
-			//utils().convertType(u256(0),IntegerType(256));
-
-			//	m_context <<Instruction::POP;
+		_functionCall.expression().accept(*this);
+		// Provide the gas stipend manually at first because we may send zero ether.
+		// Will be zeroed if we send more than zero ether.
+		m_context << u256(eth::GasCosts::callStipend);
+		arguments.front()->accept(*this);
+		utils().convertType(
+			*arguments.front()->annotation().type,
+			*function.parameterTypes().front(), true
+		);
+		arguments[1]->accept(*this);
+		utils().convertType(
+			*arguments[1]->annotation().type,
+			*function.parameterTypes()[1], true
+		);
+		// gas <- gas * !value
+		m_context << Instruction::SWAP2 << Instruction::DUP2;
+		m_context << Instruction::ISZERO << Instruction::MUL << Instruction::SWAP2;
+		appendExternalFunctionCall(
+			FunctionType(
+				TypePointers{},
+				TypePointers{},
+				strings(),
+				strings(),
+				Location::Bare,
+				false,
+				nullptr,
+				false,
+				false,
+				true,
+				true
+			),
+			{}
+		);
+//m_context << u256(0);
 
 			break;
 		case Location::Selfdestruct:
@@ -1637,6 +1631,7 @@ void ExpressionCompiler::appendExternalFunctionCall(
 
 	// Assumed stack content here:
 	// <stack top>
+	// color [if _functionType.valueSet()]
 	// value [if _functionType.valueSet()]
 	// gas [if _functionType.gasSet()]
 	// self object [if bound - moved to top right away]
@@ -1644,7 +1639,7 @@ void ExpressionCompiler::appendExternalFunctionCall(
 	// contract address
 
 	unsigned selfSize = _functionType.bound() ? _functionType.selfType()->sizeOnStack() : 0;
-	unsigned gasValueSize = (_functionType.gasSet() ? 1 : 0) + (_functionType.valueSet() ? 1 : 0);
+	unsigned gasValueSize = (_functionType.gasSet() ? 1 : 0) + (_functionType.valueSet() ? 2 : 0);
 	unsigned contractStackPos = m_context.currentToBaseStackOffset(1 + gasValueSize + selfSize + (_functionType.isBareCall() ? 0 : 1));
 	unsigned gasStackPos = m_context.currentToBaseStackOffset(gasValueSize);
 	unsigned valueStackPos = m_context.currentToBaseStackOffset(1);
@@ -1749,6 +1744,7 @@ void ExpressionCompiler::appendExternalFunctionCall(
 	// Stack now:
 	// <stack top>
 	// input_memory_end
+	// color [if _functionType.valueSet()]
 	// value [if _functionType.valueSet()]
 	// gas [if _functionType.gasSet()]
 	// function identifier [unless bare]
@@ -1778,9 +1774,15 @@ void ExpressionCompiler::appendExternalFunctionCall(
 	if (isDelegateCall)
 		solAssert(!_functionType.valueSet(), "Value set for delegatecall");
 	else if (_functionType.valueSet())
+	{
+		m_context << dupInstruction(m_context.baseToCurrentStackOffset(valueStackPos-1));
 		m_context << dupInstruction(m_context.baseToCurrentStackOffset(valueStackPos));
+	}
 	else
-		m_context << u256(0);
+		{
+			m_context << u256(0);
+			m_context << u256(0);
+		}
 	m_context << dupInstruction(m_context.baseToCurrentStackOffset(contractStackPos));
 
 	bool existenceChecked = false;
@@ -1814,7 +1816,7 @@ void ExpressionCompiler::appendExternalFunctionCall(
 
 	unsigned remainsSize =
 		2 + // contract address, input_memory_end
-		_functionType.valueSet() +
+		_functionType.valueSet() * 2  +
 		_functionType.gasSet() +
 		(!_functionType.isBareCall() || manualFunctionId);
 
