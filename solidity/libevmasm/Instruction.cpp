@@ -193,7 +193,7 @@ static const std::map<Instruction, InstructionInfo> c_instructionInfo =
 	{ Instruction::BALANCE,		{ "BALANCE",		0, 2, 1, false, ExtTier } },
 	{ Instruction::ORIGIN,		{ "ORIGIN",			0, 0, 1, false, BaseTier } },
 	{ Instruction::CALLER,		{ "CALLER",			0, 0, 1, false, BaseTier } },
-	{ Instruction::CALLVALUE,	{ "CALLVALUE",		0, 0, 1, false, BaseTier } },
+	{ Instruction::CALLVALUE,	{ "CALLVALUE",		0, 1, 1, false, BaseTier } },
 	{ Instruction::CALLDATALOAD,{ "CALLDATALOAD",	0, 1, 1, false, VeryLowTier } },
 	{ Instruction::CALLDATASIZE,{ "CALLDATASIZE",	0, 0, 1, false, BaseTier } },
 	{ Instruction::CALLDATACOPY,{ "CALLDATACOPY",	0, 3, 0, true, VeryLowTier } },

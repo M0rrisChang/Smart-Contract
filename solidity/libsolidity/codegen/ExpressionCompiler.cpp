@@ -784,7 +784,6 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
       _functionCall.expression().accept(*this);
       arguments[0]->accept(*this);
       utils().convertType(*arguments[0]->annotation().type, *function.parameterTypes()[0]);
-
       m_context << Instruction::CALLVALUE;
       break;
     }
@@ -1005,7 +1004,8 @@ bool ExpressionCompiler::visit(MemberAccess const& _memberAccess)
 		else if (member == "sender")
 			m_context << Instruction::CALLER;
 		else if (member == "value")
-			m_context << Instruction::CALLVALUE;
+//			m_context << Instruction::CALLVALUE;
+
 		else if (member == "origin")
 			m_context << Instruction::ORIGIN;
 		else if (member == "gas")
