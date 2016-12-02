@@ -531,7 +531,10 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			if (function.valueSet())
 				m_context << dupInstruction(3);
 			else
-				m_context << u256(0);
+				{
+					m_context << u256(0);
+					m_context << u256(0);
+				}
 			m_context << Instruction::CREATE;
 			if (function.valueSet())
 				m_context << swapInstruction(1) << Instruction::POP;
@@ -1005,7 +1008,7 @@ bool ExpressionCompiler::visit(MemberAccess const& _memberAccess)
 			m_context << Instruction::CALLER;
 		else if (member == "value")
 //			m_context << Instruction::CALLVALUE;
-
+;
 		else if (member == "origin")
 			m_context << Instruction::ORIGIN;
 		else if (member == "gas")
