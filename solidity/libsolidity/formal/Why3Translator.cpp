@@ -647,7 +647,7 @@ bool Why3Translator::visit(FunctionCall const& _node)
 	case FunctionType::Location::SetValue:
 	{
 		add("let amount = ");
-		solAssert(_node.arguments().size() == 1, "");
+		solAssert(_node.arguments().size() == 2, "");
 		_node.arguments()[0]->accept(*this);
 		add(" in ");
 		return false;

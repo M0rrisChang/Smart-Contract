@@ -10,13 +10,16 @@
 
 ###balance###
 * instruction.cpp        (193)
-* ExpressionCompiler.cpp (797,977)
+* ExpressionCompiler.cpp (797, 977)
 * Types.cpp              (364)
 * Types.h                (814)
 
 
 ###GetValue###
 * Types.h                (813)
+* Inctruction.cpp        (196)
+* ExpressionCompiler.cpp (782, 1007)
+* Types.cpp              (2320)
 
 ###Send###
 * Types.h                
@@ -26,3 +29,7 @@
 * Types.cpp              
 * Types.h                
 * ExpressionCompiler.cpp
+
+###Create###
+* libsolidity/codegen/ExpressionCompiler.cpp (535)
+* libevmasm/Instruction.cpp (292)
