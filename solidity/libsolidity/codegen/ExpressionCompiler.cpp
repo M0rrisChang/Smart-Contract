@@ -529,7 +529,10 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 			// need: size, offset, endowment
 			utils().toSizeAfterFreeMemoryPointer();
 			if (function.valueSet())
-				m_context << dupInstruction(3);
+				{
+					m_context << dupInstruction(3);
+					m_context << dupInstruction(4);
+				}
 			else
 				{
 					m_context << u256(0);
@@ -537,7 +540,9 @@ bool ExpressionCompiler::visit(FunctionCall const& _functionCall)
 				}
 			m_context << Instruction::CREATE;
 			if (function.valueSet())
-				m_context << swapInstruction(1) << Instruction::POP;
+				{
+					m_context << swapInstruction(2) << Instruction::POP << Instruction::POP;
+				}
 			break;
 		}
 		case Location::SetGas:
