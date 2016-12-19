@@ -1,0 +1,17 @@
+pragma solidity ^0.4.2;
+contract Oraclize_data{
+  //We didn't specify which data it is.  Casue it is more efficient
+  // that each Contract address offers one specific data.  Oracle might offer
+  // a bunch of different data with different contract addresses but the same code.
+  int public MyData;
+  function Oraclize_data(){
+    MyData = 0;
+  }
+  //76cafce000000000000000000000000000000000000000000000000000000000000ffff
+  function SendData(int data) {
+    MyData = data;
+  }
+}
+
+
+//606060405260998060106000396000f360606040526000357c01000000000000000000000000000000000000000000000000000000009004806376cafced146043578063a1f4a7c314605d57603f565b6002565b34600257605b60048080359060200190919050506082565b005b34600257606c60048050506090565b6040518082815260200191505060405180910390f35b806000600050819055505b50565b6000600050548156
