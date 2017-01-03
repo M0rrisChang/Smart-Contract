@@ -1,0 +1,51 @@
+
+{
+	"sources" : 
+	[
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/CMakeFiles/jsoncpp-project"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/CMakeFiles/jsoncpp-project.rule"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/CMakeFiles/jsoncpp-project-complete.rule"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/deps/jsoncpp/src/jsoncpp-project-stamp/jsoncpp-project-install.rule"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/deps/jsoncpp/src/jsoncpp-project-stamp/jsoncpp-project-mkdir.rule"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/deps/jsoncpp/src/jsoncpp-project-stamp/jsoncpp-project-download.rule"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/deps/jsoncpp/src/jsoncpp-project-stamp/jsoncpp-project-update.rule"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/deps/jsoncpp/src/jsoncpp-project-stamp/jsoncpp-project-patch.rule"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/deps/jsoncpp/src/jsoncpp-project-stamp/jsoncpp-project-configure.rule"
+		},
+		
+		{
+			"file" : "/Users/jonah1005/2016Fall/157/03_sm/solidity-0.4.7/deps/jsoncpp/src/jsoncpp-project-stamp/jsoncpp-project-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : [ "jsoncpp-project" ],
+		"name" : "jsoncpp-project"
+	}
+}
